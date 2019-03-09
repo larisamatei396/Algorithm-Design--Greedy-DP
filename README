@@ -1,0 +1,72 @@
+/* Matei Bianca-Larisa -> 322CB */
+
+frati.c
+Am facut o structura pentru a retine numarul de jocuri, benzi si indexul
+fiecarui concurs si 2 vectori (jon si sam) pentru a putea ordona concursurile
+in functie de preferintele lor. La citire, am initializat indexul fiecarui
+concurs de la 0 la N - 1, in ordinea in care apar in fisier. Dupa aceea, am
+ordonat cei 2 vectori, implementand 2 comparatori. Cei doi vectori de
+concursuri sunt ordonati descrescator in functie de suma dintre benzi si
+jocuri. In cazul in care suma este aceeasi pentru 2 concursuri, am ordonat
+in functie de numarul de jocuri pentru Jon (este prioritar concursul care are
+mai multe jocuri video) si in functie de numarul de benzi pentru Sam (este
+prioritar concursul care are mai multe benzi desenate). Dupa aceea, am luat
+un while de la 0 la N - 1, pentru a stabili cum isi aleg concursurile cei doi
+frati. Daca numarul de ordine este par, este randul lui Jon, altfel este
+randul lui Sam. Am luat un vector viz pentru a vedea daca un concurs a fost sau
+nu ales. Daca este randul lui Jon, aleg urmatorul concurs din vectorul sau de
+ordine care nu a fost ales, adaug intr-o variabila numarul de jocuri si
+actualizez vectorul viz, apoi fac acelasi lucru pentru Sam. La final, afisez
+numarul total de jocuri video si de benzi desenate.
+Complexitate: O(n^2).
+
+ursi.c
+Pentru inceput, am citit sirul de caractere din fisier (caracter cu caracter).
+Daca primul caracter este '_' sau numarul de '^' este impar, atunci rezultatul
+final va fi 0. Am construit o matrice care are numarul de linii egal cu
+numarul de caractere din sirul primit si numarul de coloane egal cu numarul de
+'^' / 2 + 1. In aceasta matrice, elementul de pe pozitia [i][j] reprezinta
+numarul de moduri in care se pot combina primele i caractere pentru a forma
+j fete zambitoare deschise. Am initializat prima linie a matricii cu 0, iar
+elementul de pe pozitia [0][1] va fi 1 (avand un '^', exista un singur mod de
+a forma o fata zambitoare deschisa). Pentru exemplul din cerinta "^^^_^^^",
+matricea va avea 7 linii si 4 coloane (6 / 2 + 1) si va arata in felul urmator:
+0 1 0 0
+1 0 1 0
+0 3 0 1
+0 3 0 3
+3 0 12 0
+0 27 0 12
+27 0 63 0
+Rezultatul se va afla in coltul din stanga jos => 27, deoarece avem 0 fete
+zambitoare deschise in final.
+Complexitate: O(linii * coloane), unde linii = numarul de caractere din sirul
+primit, coloane = numarul de '^' / 2 + 1.
+
+planificare.c
+Dupa ce am citit datele din fisier, am facut o matrice de P linii si P coloane
+care va contine pierderile concursurilor, dupa cum urmeaza: pentru exemplul
+din cerinta (4 7 2 - 3 2 2 5), matricea va arata asa:
+64 0 LONG_MAX LONG_MAX
+x 125 1 LONG_MAX
+x x 125 LONG_MAX
+x x x 0
+x - numere random (nu am initializat decat deasupra diagonalei principale cu
+LONG_MAX).
+Pe pozitia [1][1] (indexare de la 1) avem costul 64, adica doar pentru
+proba 3 ((7 - 3) ^ 3), pe pozitia [1][2] avem costul 0, adica pentru probele
+3 si 2 luate impreuna ((7 - 3 - 2 - 2) ^ 3) -pauza este de 2 min. Pe pozitia
+[1][3] ramane LONG_MAX, deoarece nu putem grupa impreuna primele 3 concursuri.
+Dupa aceea, pe a doua linie, se incepe cu a doua proba (aceeasi regula),
+pe a treia linie se incepe cu a treia proba, samd. Pe ultima linie (si,
+bineinteles, ultima coloana) va fi intotdeauna costul 0, la fel ca de fiecare
+data cand se ajunge la ultima coloana (adica am grupat ultimele probe din
+lista). Dupa aceea, am facut un vector in care am calculat costul minim si am
+retinut numarul de grupari.
+Complexitate: O(n ^ 2).
+
+numaratoare.c
+Am implementat metoda Backtracking pentru partitiile unui numar, putin
+optimizata, adica in loc sa incep de la numarul s, incep de la s - n + 1 si ma
+opresc cand am gasit sirul care ma intereseaza (de indice "indice" si
+n termeni).
